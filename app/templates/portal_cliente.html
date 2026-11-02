@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betan Fiscal Portal | IBM Carbon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cds-ui-background: #ffffff;
+      --cds-ui-01: #f4f4f4;
+      --cds-ui-02: #ffffff;
+      --cds-ui-03: #e0e0e0;
+      --cds-text-01: #161616;
+      --cds-text-02: #525252;
+      --cds-interactive-01: #0f62fe;
+      --cds-interactive-01-hover: #0353e9;
+      --cds-danger: #da1e28;
+      --cds-support-01: #fa4d56;
+      --cds-support-02: #42be65;
+      --cds-support-03: #f1c21b;
+      --cds-support-04: #4589ff;
+      --cds-header-bg: #161616;
+      --cds-font: 'IBM Plex Sans', sans-serif;
+      --cds-mono: 'IBM Plex Mono', monospace;
+    }
+
+    [data-theme="high-contrast"] {
+      --cds-ui-background: #000000;
+      --cds-ui-01: #161616;
+      --cds-ui-02: #262626;
+      --cds-ui-03: #ffffff;
+      --cds-text-01: #ffffff;
+      --cds-text-02: #f4f4f4;
+      --cds-interactive-01: #ffff00;
+      --cds-interactive-01-hover: #e5e500;
+      --cds-danger: #ff8389;
+      --cds-support-01: #ff8389;
+      --cds-support-02: #6fdc8c;
+      --cds-support-03: #f1c21b;
+      --cds-support-04: #82cfff;
+      --cds-header-bg: #000000;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+    body {
+      font-family: var(--cds-font);
+      background-color: var(--cds-ui-background);
+      color: var(--cds-text-01);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .bx--header {
+      height: 48px;
+      background-color: var(--cds-header-bg);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--cds-ui-03);
+    }
+    .bx--header__name {
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.1px;
+    }
+    .bx--header__name strong {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .bx--header__actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bx--btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      font-size: 14px;
+      font-family: var(--cds-font);
+      font-weight: 400;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color 70ms cubic-bezier(0,0,.38,.9);
+    }
+    .bx--btn--primary {
+      background-color: var(--cds-interactive-01);
+      color: #ffffff;
+    }
+    [data-theme="high-contrast"] .bx--btn--primary {
+      color: #000000 !important;
+      border: 1px solid #ffffff;
+    }
+    .bx--btn--primary:hover { background-color: var(--cds-interactive-01-hover); }
+    .bx--btn--ghost {
+      background-color: transparent;
+      color: #ffffff;
+      border: 1px solid #525252;
+    }
+    .bx--btn--ghost:hover { background-color: #353535; }
+    .bx--btn--sm { min-height: 32px; padding: 0 12px; font-size: 12px; }
+
+    .bx--container {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    .bx--grid-2col {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 32px;
+    }
+
+    .bx--inline-notification {
+      display: flex;
+      background-color: var(--cds-ui-01);
+      border-left: 3px solid var(--cds-support-03);
+      padding: 12px 16px;
+      margin-bottom: 24px;
+    }
+    .bx--inline-notification__title { font-weight: 600; margin-right: 6px; }
+
+    .bx--tile {
+      background-color: var(--cds-ui-01);
+      padding: 24px;
+      border: 1px solid var(--cds-ui-03);
+    }
+    .bx--tile__header {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--cds-ui-03);
+      padding-bottom: 8px;
+    }
+
+    .bx--form-item { margin-bottom: 20px; }
+    .bx--label {
+      display: block;
+      font-size: 12px;
+      color: var(--cds-text-02);
+      margin-bottom: 6px;
+      font-weight: 400;
+    }
+    .bx--text-input, .bx--select {
+      width: 100%;
+      height: 40px;
+      background-color: var(--cds-ui-02);
+      border: 1px solid var(--cds-ui-03);
+      border-bottom: 2px solid var(--cds-text-02);
+      padding: 0 12px;
+      font-family: var(--cds-font);
+      font-size: 14px;
+      color: var(--cds-text-01);
+    }
+    .bx--text-input:focus, .bx--select:focus {
+      outline: 2px solid var(--cds-interactive-01);
+      outline-offset: -2px;
+    }
+
+    .bx--data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background-color: var(--cds-ui-02);
+      border: 1px solid var(--cds-ui-03);
+    }
+    .bx--data-table th {
+      background-color: var(--cds-ui-01);
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      border-bottom: 1px solid var(--cds-ui-03);
+    }
+    .bx--data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--cds-ui-03);
+    }
+    .bx--data-table tr:hover td { background-color: var(--cds-ui-01); }
+
+    .bx--tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-family: var(--cds-mono);
+      font-weight: 500;
+    }
+    .bx--tag--blue { background-color: #d0e2ff; color: #0043ce; }
+    .bx--tag--cyan { background-color: #bae6ff; color: #00539a; }
+    .bx--tag--red { background-color: #ffd7d9; color: #a2191f; }
+  </style>
+</head>
+<body id="carbon-root">
+
+  <header class="bx--header">
+    <div class="bx--header__name">
+      <strong>Betan</strong> [Contabilidade] / Portal Fiscal
+    </div>
+    <div class="bx--header__actions">
+      <button class="bx--btn bx--btn--ghost bx--btn--sm" onclick="alterarFonte(-1)">A-</button>
+      <button class="bx--btn bx--btn--ghost bx--btn--sm" onclick="alterarFonte(1)">A+</button>
+      <button class="bx--btn bx--btn--ghost bx--btn--sm" onclick="toggleTheme()" id="theme-btn">Modo Alto Contraste</button>
+      <a href="/gestao" class="bx--btn bx--btn--primary bx--btn--sm">Painel da Triagem &rarr;</a>
+    </div>
+  </header>
+
+  <main class="bx--container">
+    <div class="bx--inline-notification">
+      <span class="bx--inline-notification__title">Atenção requerida:</span>
+      <span>A competência <strong>10/2026</strong> possui pendências de conciliação fiscal pendentes de envio.</span>
+    </div>
+
+    <div class="bx--grid-2col">
+      <section class="bx--tile">
+        <h2 class="bx--tile__header">Entrada de Documento Fiscal</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          
+          <div class="bx--form-item">
+            <label class="bx--label" for="competencia">Competência de Fechamento</label>
+            <input type="text" class="bx--text-input" id="competencia" name="competencia" value="10/2026" required>
+          </div>
+
+          <div class="bx--form-item">
+            <label class="bx--label" for="categoria">Categoria Tributária</label>
+            <select class="bx--select" id="categoria" name="categoria" required>
+              <option value="Notas Fiscais de Entrada">Notas Fiscais de Entrada</option>
+              <option value="Extratos Bancários">Extratos Bancários</option>
+              <option value="Folha de Pagamento">Folha de Pagamento / Encargos</option>
+              <option value="Comprovantes Gerais">Comprovantes Gerais</option>
+            </select>
+          </div>
+
+          <div class="bx--form-item">
+            <label class="bx--label" for="documento">Arquivo Físico (PDF, PNG ou JPG até 10MB)</label>
+            <input type="file" class="bx--text-input" id="documento" name="documento" required style="padding-top: 6px;">
+          </div>
+
+          <button type="submit" class="bx--btn bx--btn--primary" style="width: 100%;">
+            Registrar Entrega de Documento
+          </button>
+        </form>
+      </section>
+
+      <section>
+        <table class="bx--data-table">
+          <thead>
+            <tr>
+              <th>Competência</th>
+              <th>Arquivo Recebido</th>
+              <th>Categoria</th>
+              <th>Status do Processamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in documentos %}
+            <tr>
+              <td style="font-family: var(--cds-mono); font-weight: 500;">{{ d.competencia }}</td>
+              <td style="font-family: var(--cds-mono);">{{ d.doc }}</td>
+              <td>{{ d.categoria }}</td>
+              <td>
+                {% if d.status == 'Recebido' %}
+                  <span class="bx--tag bx--tag--blue">{{ d.status }}</span>
+                {% elif d.status == 'Em Análise' %}
+                  <span class="bx--tag bx--tag--cyan">{{ d.status }}</span>
+                {% else %}
+                  <span class="bx--tag bx--tag--red">{{ d.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    let fs = 14;
+    function alterarFonte(d) {
+      fs += d;
+      document.body.style.fontSize = fs + 'px';
+    }
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'high-contrast' ? 'white' : 'high-contrast';
+      html.setAttribute('data-theme', next);
+      document.getElementById('theme-btn').innerText = next === 'high-contrast' ? 'Modo Normal' : 'Modo Alto Contraste';
+    }
+  </script>
+</body>
+</html>

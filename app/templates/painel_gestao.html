@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Betan Gestão Contábil | IBM Carbon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0 !important; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: #f4f4f4;
+      color: #161616;
+      font-size: 14px;
+    }
+    .bx--header {
+      height: 48px;
+      background-color: #161616;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+    .bx--header strong { margin-right: 4px; }
+    .bx--btn {
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      padding: 0 12px;
+      font-size: 12px;
+      color: #fff;
+      text-decoration: none;
+      background-color: #393939;
+      border: 1px solid #525252;
+      cursor: pointer;
+    }
+    .bx--btn:hover { background-color: #4c4c4c; }
+    .bx--container {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    .bx--table-header {
+      background-color: #ffffff;
+      padding: 16px 24px;
+      border: 1px solid #e0e0e0;
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bx--filter-bar {
+      background-color: #ffffff;
+      padding: 12px 24px;
+      border: 1px solid #e0e0e0;
+      border-bottom: none;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .bx--search-input {
+      flex: 1;
+      height: 36px;
+      border: 1px solid #e0e0e0;
+      border-bottom: 2px solid #525252;
+      padding: 0 12px;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .bx--data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+    }
+    .bx--data-table th {
+      background-color: #e0e0e0;
+      text-align: left;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+    }
+    .bx--data-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .bx--tag {
+      display: inline-flex;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+    }
+    .bx--tag--blue { background-color: #d0e2ff; color: #0043ce; }
+    .bx--tag--cyan { background-color: #bae6ff; color: #00539a; }
+    .bx--tag--red { background-color: #ffd7d9; color: #a2191f; }
+  </style>
+</head>
+<body>
+  <header class="bx--header">
+    <div><strong>Betan</strong> [Operações] / Mesa de Triagem Contábil</div>
+    <a href="/" class="bx--btn">&larr; Voltar ao Portal</a>
+  </header>
+
+  <main class="bx--container">
+    <div class="bx--table-header">
+      <div>
+        <h2 style="font-size: 16px; font-weight: 600;">Comprovantes Fiscais em Triagem</h2>
+        <p style="font-size: 12px; color: #525252;">Triagem otimizada conforme feedback da comunidade</p>
+      </div>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #e0e0e0; padding: 4px 8px;">COMPETÊNCIA: 10/2026</span>
+    </div>
+
+    <!-- Barra de Filtro e Busca Rápida solicitada no Feedback -->
+    <div class="bx--filter-bar">
+      <input type="text" id="filtroInput" class="bx--search-input" placeholder="Pesquisar por cliente, documento ou tipo fiscal..." onkeyup="filtrarTabela()">
+    </div>
+
+    <table class="bx--data-table" id="tabelaTriagem">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Razão Social / CNPJ</th>
+          <th>Competência</th>
+          <th>Arquivo Recebido</th>
+          <th>Tipo Fiscal</th>
+          <th>Status Operacional</th>
+          <th>Apontamento Técnico</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in documentos %}
+        <tr>
+          <td style="font-family: 'IBM Plex Mono', monospace; color: #525252;">#00{{ d.id }}</td>
+          <td style="font-weight: 500;">{{ d.cliente }}</td>
+          <td style="font-family: 'IBM Plex Mono', monospace;">{{ d.competencia }}</td>
+          <td style="font-family: 'IBM Plex Mono', monospace;">{{ d.doc }}</td>
+          <td>{{ d.categoria }}</td>
+          <td>
+            {% if d.status == 'Recebido' %}
+              <span class="bx--tag bx--tag--blue">{{ d.status }}</span>
+            {% elif d.status == 'Em Análise' %}
+              <span class="bx--tag bx--tag--cyan">{{ d.status }}</span>
+            {% else %}
+              <span class="bx--tag bx--tag--red">{{ d.status }}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if d.obs %}
+              <span style="color: #da1e28; font-size: 12px; font-weight: 500;">● {{ d.obs }}</span>
+            {% else %}
+              <span style="color: #525252; font-size: 12px;">Conforme</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    function filtrarTabela() {
+      const input = document.getElementById("filtroInput").value.toLowerCase();
+      const linhas = document.querySelectorAll("#tabelaTriagem tbody tr");
+      linhas.forEach(linha => {
+        const texto = linha.innerText.toLowerCase();
+        linha.style.display = texto.includes(input) ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>
